@@ -1,6 +1,6 @@
-package com.newzhxu.maximumdepthofbinarytree104;
+package com.newzhxu;
 
-import com.newzhxu.TreeNode;
+import com.newzhxu.entity.TreeNode;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
@@ -35,12 +35,12 @@ import java.util.Arrays;
  * 树中节点的数量在 [0, 104] 区间内。
  * -100 <= Node.val <= 100
  */
-public class Solution {
+public class MaximumDepthOfBinarytree104 {
     public static void main(String[] args) {
 
-        final Solution solution = new Solution();
+        final MaximumDepthOfBinarytree104 maximumDepthOfBinarytree104 = new MaximumDepthOfBinarytree104();
         Arrays.stream(InputAndOutput.values()).forEach(inputAndOutput -> {
-            final int output = solution.maxDepth(inputAndOutput.input);
+            final int output = maximumDepthOfBinarytree104.maxDepth(inputAndOutput.input);
             if (output != inputAndOutput.output) {
                 throw new RuntimeException();
             } else {
@@ -50,10 +50,16 @@ public class Solution {
     }
 
     int maxDepth(TreeNode root) {
+        // 如果节点为空则返回0
         if (root == null) {
             return 0;
         }
-        return Math.max(maxDepth(root.getLeft()) + 1, maxDepth(root.getRight()) + 1);
+        // 左边的最大深度
+        int left = maxDepth(root.getLeft());
+        // 右边的最大深度
+        int right = maxDepth(root.getRight());
+        // 返回两边的最大深度加1
+        return Math.max(left, right) + 1;
     }
 
     @AllArgsConstructor
@@ -62,28 +68,28 @@ public class Solution {
                 .val(3)
                 .left(TreeNode.builder()
                         .val(9)
-                        .build())
-                .right(TreeNode.builder()
+                        .build()
+                ).right(TreeNode.builder()
                         .val(20)
                         .left(TreeNode.builder()
                                 .val(15)
-                                .build())
-                        .right(TreeNode.builder()
+                                .build()
+                        ).right(TreeNode.builder()
                                 .val(7)
-                                .build())
-                        .build())
-                .build(), 3),
+                                .build()
+                        ).build()
+                ).build(), 3),
         CASE2(TreeNode.builder()
                 .val(1)
                 .right(TreeNode.builder()
                         .val(2)
-                        .build())
-                .build(), 2),
+                        .build()
+                ).build(), 2),
         CASE3(TreeNode.builder()
                 .val(0)
                 .build(), 1),
         CASE4(null, 0),
-        
+
 
         ;
         final TreeNode input;

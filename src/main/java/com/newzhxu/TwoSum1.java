@@ -1,4 +1,4 @@
-package com.newzhxu.twosum1;
+package com.newzhxu;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,14 +54,14 @@ import java.util.Map;
  * 进阶：你可以想出一个时间复杂度小于 O(n2) 的算法吗？
  */
 
-public class Solution {
+public class TwoSum1 {
     public static void main(String[] args) {
 
-        final Solution solution = new Solution();
+        final TwoSum1 twoSum1 = new TwoSum1();
         Arrays.stream(InputAndOutputEnum.values()).forEach(inputAndOutputEnum -> {
             int[] nums = inputAndOutputEnum.input.nums;
             int target = inputAndOutputEnum.input.target;
-            int[] result = solution.twoSum1(nums, target);
+            int[] result = twoSum1.twoSum1(nums, target);
             System.out.println(Arrays.toString(result));
             System.out.println(Arrays.equals(result, inputAndOutputEnum.output.nums));
         });

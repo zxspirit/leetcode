@@ -1,5 +1,6 @@
 package com.newzhxu;
 
+import com.newzhxu.entity.TreeNode;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
@@ -50,15 +51,16 @@ public class MinimumDepthOfBinaryTree111 {
 
     //中序遍历实现
     int minDepth(TreeNode root) {
+        // 如果节点为空则返回0
         if (root == null) {
             return 0;
         }
-        int left = minDepth(root.left);
-        int right = minDepth(root.right);
+        int left = minDepth(root.getLeft());
+        int right = minDepth(root.getRight());
 
-        if (root.left == null && root.right != null) {// 左边为空，右边不为空，返回右边的深度加1
+        if (root.getLeft() == null && root.getRight() != null) {// 左边为空，右边不为空，返回右边的深度加1
             return right + 1;
-        } else if (root.left != null && root.right == null) {// 右边为空，左边不为空，返回左边深度加1
+        } else if (root.getLeft() != null && root.getRight() == null) {// 右边为空，左边不为空，返回左边深度加1
             return left + 1;
         } else {// 左右都不为空，返回两边深度的最小值加1
             return Math.min(left, right) + 1;
