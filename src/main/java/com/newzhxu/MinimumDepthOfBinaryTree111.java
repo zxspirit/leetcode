@@ -49,10 +49,15 @@ public class MinimumDepthOfBinaryTree111 {
     }
 
     int minDepth(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        return Math.min(minDepth(root.getLeft()) + 1, minDepth(root.getRight()) + 1);
+        if (root == null) return 0;
+//        int m1 = minDepth(root.left);
+//        int m2 = minDepth(root.right);
+        //1.如果左孩子和右孩子有为空的情况，直接返回m1+m2+1
+        //2.如果都不为空，返回较小深度+1
+        return root.left == null || root.right == null ?
+                minDepth(root.left) + minDepth(root.right) + 1 : Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+
+
     }
 
     @AllArgsConstructor
@@ -61,8 +66,8 @@ public class MinimumDepthOfBinaryTree111 {
                 .val(3)
                 .left(TreeNode.builder()
                         .val(9)
-                        .build())
-                .right(TreeNode.builder()
+                        .build()
+                ).right(TreeNode.builder()
                         .val(20)
                         .left(TreeNode.builder()
                                 .val(15)
@@ -70,19 +75,28 @@ public class MinimumDepthOfBinaryTree111 {
                         .right(TreeNode.builder()
                                 .val(7)
                                 .build())
-                        .build())
-                .build(), 2),
+                        .build()
+                ).build(), 2),
         CASE2(TreeNode.builder()
                 .val(1)
                 .right(TreeNode.builder()
                         .val(2)
-                        .build())
-                .build(), 1),
+                        .build()
+                ).build(), 2),
         CASE3(TreeNode.builder()
                 .val(0)
                 .build(), 1),
         CASE4(null, 0),
-
+        CASE5(TreeNode.builder()
+                .val(2).right(TreeNode.builder()
+                        .val(3)
+                        .right(TreeNode.builder()
+                                .val(4).right(TreeNode.builder()
+                                        .val(5).right(TreeNode.builder().val(6).build()).build()
+                                ).build()
+                        ).build()
+                ).build(), 5
+        ),
 
         ;
         final TreeNode input;
