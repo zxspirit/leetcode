@@ -57,10 +57,11 @@ import java.util.Map;
 public class Solution {
     public static void main(String[] args) {
 
+        final Solution solution = new Solution();
         Arrays.stream(InputAndOutputEnum.values()).forEach(inputAndOutputEnum -> {
             int[] nums = inputAndOutputEnum.input.nums;
             int target = inputAndOutputEnum.input.target;
-            int[] result = new Solution().twoSum1(nums, target);
+            int[] result = solution.twoSum1(nums, target);
             System.out.println(Arrays.toString(result));
             System.out.println(Arrays.equals(result, inputAndOutputEnum.output.nums));
         });
