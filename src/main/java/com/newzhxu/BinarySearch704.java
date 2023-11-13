@@ -1,10 +1,12 @@
 package com.newzhxu;
 
+import com.newzhxu.entity.RequestAndResult;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * 704. 二分查找
@@ -34,56 +36,85 @@ import java.util.Arrays;
  * nums 的每个元素都将在 [-9999, 9999]之间。
  */
 public class BinarySearch704 {
-    public static void main(String[] args) {
-        BinarySearch704 binarySearch704 = new BinarySearch704();
-        System.out.println("=================" + "开始左闭右闭二分查找" + "==============");
-        Arrays.stream(InputAndOutput.values()).forEach(e -> {
-            final int output = binarySearch704.search(e.input.getInput(), e.input.getTarget());
-            if (output != e.output) {
-                System.out.println("error" + "---" + output + "---" + e.input);
-                throw new RuntimeException();
-            } else {
-                System.out.println("success" + "---" + output + "---" + e.input);
-            }
-        });
-        System.out.println("=================" + "开始左闭右开二分查找" + "==============");
-        Arrays.stream(InputAndOutput.values()).forEach(e -> {
-            final int output = binarySearch704.search1(e.input.getInput(), e.input.getTarget());
-            if (output != e.output) {
-                System.out.println("error" + "---" + output + "---" + e.input);
-                throw new RuntimeException();
-            } else {
-                System.out.println("success" + "---" + output + "---" + e.input);
-            }
-        });
-        System.out.println("=================" + "开始左闭右闭递归二分查找" + "==============");
-        Arrays.stream(InputAndOutput.values()).forEach(e -> {
-            final int output = binarySearch704.search3(e.input.getInput(), e.input.getTarget());
-            if (output != e.output) {
-                System.out.println("error" + "---" + output + "---" + e.input);
-                throw new RuntimeException();
-            } else {
-                System.out.println("success" + "---" + output + "---" + e.input);
-            }
-        });
-        System.out.println("=================" + "开始左闭右开递归二分查找" + "==============");
-        Arrays.stream(InputAndOutput.values()).forEach(e -> {
-            final int output = binarySearch704.search4(e.input.getInput(), e.input.getTarget());
-            if (output != e.output) {
-                System.out.println("error" + "---" + output + "---" + e.input);
-                throw new RuntimeException();
-            } else {
-                System.out.println("success" + "---" + output + "---" + e.input);
-            }
-        });
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class Input {
+        private Integer[] input;
+        private Integer target;
     }
 
-    private int search4(int[] input, int target) {
+    public static void main(String[] args) {
+
+        final BinarySearch704 binarySearch7041 = new BinarySearch704();
+        final var requestAndResults = List.of(RequestAndResult.<Input, Integer>builder().
+                        request(Input.builder().
+                                input(new Integer[]{-1, 0, 3, 5, 9, 12})
+                                .target(9)
+                                .build())
+                        .result(4)
+                        .build(),
+                RequestAndResult.<Input, Integer>builder()
+                        .request(Input.builder()
+                                .input(new Integer[]{-1, 0, 3, 5, 9, 12})
+                                .target(2)
+                                .build())
+                        .result(-1)
+                        .build());
+        System.out.println("=================" + "开始左闭右闭二分查找" + "==============");
+        requestAndResults
+                .forEach(e -> {
+                    final int i = binarySearch7041.search(e.getRequest().input, e.getRequest().target);
+                    if (i != e.getResult()) {
+                        System.out.println("error" + "---" + i + "---" + e);
+                        throw new RuntimeException();
+                    } else {
+                        System.out.println("success" + "---" + i + "---" + e);
+                    }
+                });
+        System.out.println("=================" + "开始左闭右开二分查找" + "==============");
+        requestAndResults
+                .forEach(e -> {
+                    final int i = binarySearch7041.search1(e.getRequest().input, e.getRequest().target);
+                    if (i != e.getResult()) {
+                        System.out.println("error" + "---" + i + "---" + e);
+                        throw new RuntimeException();
+                    } else {
+                        System.out.println("success" + "---" + i + "---" + e);
+                    }
+                });
+        System.out.println("=================" + "开始左闭右闭递归二分查找" + "==============");
+        requestAndResults
+                .forEach(e -> {
+                    final int i = binarySearch7041.search3(e.getRequest().input, e.getRequest().target);
+                    if (i != e.getResult()) {
+                        System.out.println("error" + "---" + i + "---" + e);
+                        throw new RuntimeException();
+                    } else {
+                        System.out.println("success" + "---" + i + "---" + e);
+                    }
+                });
+        System.out.println("=================" + "开始左闭右开递归二分查找" + "==============");
+        requestAndResults
+                .forEach(e -> {
+                    final int i = binarySearch7041.search4(e.getRequest().input, e.getRequest().target);
+                    if (i != e.getResult()) {
+                        System.out.println("error" + "---" + i + "---" + e);
+                        throw new RuntimeException();
+                    } else {
+                        System.out.println("success" + "---" + i + "---" + e);
+                    }
+                });
+        
+    }
+
+    private int search4(Integer[] input, Integer target) {
         return binary1(input, target, 0, input.length);
     }
 
     // 左闭右开递归
-    private int binary1(int[] input, int target, int left, int right) {
+    private Integer binary1(Integer[] input, Integer target, Integer left, Integer right) {
         if (left > right) {
             return -1;
         }
@@ -98,7 +129,7 @@ public class BinarySearch704 {
     }
 
     // 左闭右闭
-    public int search(int[] nums, int target) {
+    public Integer search(Integer[] nums, int target) {
 //        System.out.println("左闭右闭");
         int left = 0;
         int right = nums.length - 1;
@@ -118,7 +149,7 @@ public class BinarySearch704 {
     }
 
     // 左闭右开
-    int search1(int[] nums, int target) {
+    Integer search1(Integer[] nums, Integer target) {
 //        System.out.println("左闭右开");
         int left = 0;
         int right = nums.length;
@@ -136,11 +167,11 @@ public class BinarySearch704 {
     }
 
     // 递归二分查找
-    int search3(int[] nums, int target) {
+    Integer search3(Integer[] nums, Integer target) {
         return binary(nums, target, 0, nums.length - 1);
     }
 
-    private int binary(int[] nums, int target, int left, int right) {
+    private Integer binary(Integer[] nums, Integer target, Integer left, Integer right) {
         if (left > right) {
             return -1;
         }
@@ -155,19 +186,5 @@ public class BinarySearch704 {
 
     }
 
-    @AllArgsConstructor
-    enum InputAndOutput {
-        CASE1(Input.builder().input(new int[]{-1, 0, 3, 5, 9, 12}).target(9).build(), 4),
-        CASE2(Input.builder().input(new int[]{-1, 0, 3, 5, 9, 12}).target(2).build(), -1),
-        ;
-        final Input input;
-        final int output;
-    }
 
-    @Data
-    @Builder
-    static class Input {
-        final int[] input;
-        final int target;
-    }
 }
