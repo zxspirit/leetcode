@@ -1,10 +1,10 @@
 package com.newzhxu;
 
-import lombok.AllArgsConstructor;
+import com.newzhxu.entity.RequestAndResult;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * 27. 移除元素
@@ -56,48 +56,50 @@ import java.util.Arrays;
  * 0 <= nums[i] <= 50
  * 0 <= val <= 100
  */
-public class RemoveElement27 {
+public class RemoveElement_27 {
     public static void main(String[] args) {
-        RemoveElement27 removeElement27 = new RemoveElement27();
-        Arrays.stream(InputAndOutput.values()).forEach(e -> {
-            System.out.println(Arrays.toString(e.input.nums));
-            int afterRemoveLength = removeElement27.removeElement(e.input.nums, e.input.targetToRemove);
-            if (afterRemoveLength != e.output) {
-                System.out.println("error" + "---" + afterRemoveLength + "---" + Arrays.toString(e.input.nums));
-                throw new RuntimeException();
-            } else {
-                System.out.println("success" + "---" + afterRemoveLength + "---" + Arrays.toString(e.input.nums));
-            }
-        });
+        final var requestAndResults = List.of(RequestAndResult.<Input, Integer>builder()
+                        .request(Input.builder()
+                                .nums(new int[]{3, 2, 2, 3})
+                                .targetToRemove(3)
+                                .build())
+                        .result(2)
+                        .build(),
+                RequestAndResult.<Input, Integer>builder()
+                        .request(Input.builder()
+                                .nums(new int[]{0, 1, 2, 2, 3, 0, 4, 2})
+                                .targetToRemove(2)
+                                .build())
+                        .result(5)
+                        .build());
+        RemoveElement_27 removeElement27 = new RemoveElement_27();
+        System.out.println("=================" + "开始移除元素" + "==============");
+        requestAndResults
+                .forEach(e -> {
+                    System.out.println(e);
+                    final int i = removeElement27.removeElement(e.getRequest().nums, e.getRequest().targetToRemove);
+                    if (i == e.getResult()) {
+                        System.out.println("success" + "---" + i);
+
+                    } else {
+                        System.out.println("error" + "---" + i);
+                        throw new RuntimeException();
+                    }
+                });
+
     }
 
-    public int removeElement(int[] nums, int val) {
-
-
+    public int removeElement(int[] nums, int targetToRemove) {
         int slowIndex = 0;
         for (int fastIndex = 0; fastIndex < nums.length; fastIndex++) {
-            if (nums[fastIndex] != val) {
-                nums[slowIndex] = nums[fastIndex];
-                slowIndex++;
+            if (nums[fastIndex] != targetToRemove) {
+                nums[slowIndex++] = nums[fastIndex];
+//                slowIndex++;
             }
         }
         return slowIndex;
     }
 
-    @AllArgsConstructor
-    enum InputAndOutput {
-        CASE1(Input.builder()
-                .nums(new int[]{3, 2, 2, 3})
-                .targetToRemove(3)
-                .build(), 2),
-        CASE2(Input.builder()
-                .targetToRemove(2)
-                .nums(new int[]{0, 1, 2, 2, 3, 0, 4, 2})
-                .build(), 5),
-        ;
-        final Input input;
-        final int output;
-    }
 
     @Data
     @Builder
