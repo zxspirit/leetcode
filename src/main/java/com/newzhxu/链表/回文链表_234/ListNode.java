@@ -1,4 +1,4 @@
-package com.newzhxu.链表.反转链表_206;
+package com.newzhxu.链表.回文链表_234;
 
 import lombok.Data;
 
@@ -18,6 +18,4 @@ public class ListNode {
         this.val = val;
         this.next = next;
     }
-
-
 }

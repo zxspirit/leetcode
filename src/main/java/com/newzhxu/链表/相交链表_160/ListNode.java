@@ -1,5 +1,8 @@
 package com.newzhxu.链表.相交链表_160;
 
+import lombok.Data;
+
+@Data
 class ListNode {
     int val;
     ListNode next;
