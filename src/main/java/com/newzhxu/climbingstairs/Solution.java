@@ -3,6 +3,9 @@ package com.newzhxu.climbingstairs;
 /**
  * 70. 爬楼梯
  * <a href="https://leetcode.cn/problems/climbing-stairs/">...</a>
+ * 记忆化搜索
+ * 数学
+ * 动态规划
  */
 public class Solution {
     public int climbStairs(int n) {
